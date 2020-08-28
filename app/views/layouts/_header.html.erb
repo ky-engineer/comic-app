@@ -2,13 +2,16 @@
   <div class="container">
     <%= link_to "Comic Mate", root_path  %>
     <ul>
-      <li><%= link_to "新規登録", "#" %></li>
-      <li><%= link_to "ログイン", "#" %></li>
-      <li><%= link_to "新規投稿", "#" %></li>
-      <li><%= link_to "ユーザー一覧", "#" %></li>
-      <li><%= link_to "プロフィール", "#" %></li>
-      <li><%= link_to "ユーザー情報の変更", "#" %></li>
-      <li><%= link_to "ログアウト", "#" %></li>
+      <% if session[:user_id].nil? %>
+        <li><%= link_to "新規登録", new_user_path %></li>
+        <li><%= link_to "ログイン", new_session_path %></li>
+      <% else %>
+        <li><%= link_to "新規投稿", "#" %></li>
+        <li><%= link_to "ユーザー一覧", "#" %></li>
+        <li><%= link_to "プロフィール", "#" %></li>
+        <li><%= link_to "ユーザー情報の変更", "#" %></li>
+        <li><%= link_to "ログアウト", session_path(current_user), method: :delete %></li>
+      <% end %>
     </ul>
   </div>
 </header>
