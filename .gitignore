@@ -36,6 +36,9 @@
 # Ignore Spring files.
 /spring/*.pid
 
+#環境変数を管理対象から外す
+/.env
+
 /public/packs
 /public/packs-test
 /node_modules
