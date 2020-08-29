@@ -1,5 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+admin_user:
+  name: admin_user
+  email: admin_user@test.com
+  password_digest: <%= User.digest('password') %>
+  admin: true
+
+non_admin_user:
+  name: non_admin_user
+  email: non_admin_user@test.com
+  password_digest: <%= User.digest('password') %>
+  admin: false
+
 one:
   name: one
   email: one@test.com
@@ -11,3 +23,11 @@ two:
   email: two@test.com
   password_digest: <%= User.digest('password') %>
   admin: false
+
+<% 30.times do |n| %>
+user_<%= n+1 %>:
+  name: <%= "user_#{n+1}" %>
+  email: <%= "user_#{n+1}@test.com" %>
+  password_digest: <%= User.digest('password') %>
+  admin: false
+<% end %>

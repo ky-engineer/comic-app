@@ -8,9 +8,9 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   # 無効なログイン
   test "login with invalid information" do
     get new_session_path
-    assert_template "sessions/new"
+    assert_template 'sessions/new'
     post sessions_path, params: { session: { email: "", password: "" } }
-    assert_template "sessions/new"
+    assert_template 'sessions/new'
     assert_not flash.empty?
     get root_path
     assert flash.empty?
@@ -19,11 +19,12 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   # 有効なログインとログアウト
   test "login with valid information followed by logout" do
     get new_session_path
-    assert_template "sessions/new"
+    assert_template 'sessions/new'
     post sessions_path, params: { session: { email: @user.email, password: "password" } }
-    assert_redirected_to @user
+    assert_not flash.empty?
+    assert_redirected_to user_path(@user)
     follow_redirect!
-    assert_template "users/show"
+    assert_template 'users/show'
     delete session_path(current_user)
     assert session[:user_id].nil?
     assert_redirected_to root_url

@@ -10,6 +10,12 @@ class ActiveSupport::TestCase
   parallelize(workers: 1)
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
-  include SessionsHelper
+
   # Add more helper methods to be used by all tests here...
+  include SessionsHelper
+
+  def log_in(user)
+    post sessions_path, params: { session: { email: user.email, password: "password" } }
+  end
+
 end

@@ -13,6 +13,10 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rails-i18n'
 gem 'dotenv-rails'
+gem 'faker'
+gem 'will_paginate', '3.1.7'
+gem 'bootstrap-will_paginate', '1.0.0'
+
 
 group :development, :test do
   gem 'mysql2'
