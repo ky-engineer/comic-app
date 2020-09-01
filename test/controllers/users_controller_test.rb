@@ -21,18 +21,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   #before_action :login_userに対するテスト
 
 
-  test "should redirect index when not logged in" do
-    get users_path
-    assert_not flash.empty?
-    assert_redirected_to new_session_path
-  end
-
-  test "should redirect show when not logged in" do
-    get user_path(@user)
-    assert_not flash.empty?
-    assert_redirected_to new_session_path
-  end
-
   test "should redirect edit when not logged in" do
     get edit_user_path(@user)
     assert_not flash.empty?

@@ -1,0 +1,38 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: one_title
+  content: one_content
+  picture_url: one_picture_url
+  user: one
+  created_at: <%= 10.minutes.ago %>
+
+two:
+  title: two_title
+  content: two_content
+  picture_url: teo_picture_url
+  user: two
+  created_at: <%= 3.years.ago %>
+
+three:
+  title: three_title
+  content: three_content
+  picture_url: three_picture_url
+  user: three
+  created_at: <%= 2.hours.ago %>
+
+most_recent:
+  title: most_recent_title
+  content: most_recent_content
+  picture_url: most_recent_picture_url
+  user: four
+  created_at: <%= Time.zone.now %>
+
+<% 30.times do |n| %>
+one_<%= n+2 %>:
+  title: one_title_<%= n+2 %>
+  content: one_content_<%= n+2 %>
+  picture_url: one_picture_url_<%= n+2 %>
+  user: one
+  created_at: <%= 5.minutes.ago %>
+<% end %>

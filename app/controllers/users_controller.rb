@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :login_user, only: [:show, :index, :edit, :update, :destroy]
+  before_action :login_user, only: [:edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
 
@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
+    @posts = @user.posts.paginate(page: params[:page])
   end
 
   def index
@@ -62,15 +63,6 @@ class UsersController < ApplicationController
 
   # before_action用のメソッド
 
-
-  # ログインしているかどうか
-  def login_user
-    if session[:user_id].nil?
-      flash[:warning] = "ログインしてください"
-      session[:forwarding_url] = request.original_url if request.get?
-      redirect_to new_session_path
-    end
-  end
 
   # ログインしているユーザーと編集対象のユーザーが一致するかどうか
   def correct_user

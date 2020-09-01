@@ -9,7 +9,6 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
 
   # ユーザー一覧表示とページネーション機能
   test "index including pagination" do
-    post sessions_path, params: { session: { email: @user.email, password: "password" } }
     get users_path
     assert_template 'users/index'
     assert_select 'div.pagination'
@@ -20,7 +19,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
 
   # deleteリンクとdelete機能
   test "index as admin including delete links" do
-    post sessions_path, params: { session: { email: @admin.email, password: "password" } }
+    log_in(@admin)
     get users_path
     User.paginate(page: 1).each do |user|
       if user != @admin
@@ -34,7 +33,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
 
   # 管理者以外にdeleteリンクを表示させない
   test "index as non_admin" do
-    post sessions_path, params: { session: { email: @non_admin.email, password: "password" } }
+    log_in(@non_admin)
     get users_path
     assert_select "a", text: "削除", count: 0
   end

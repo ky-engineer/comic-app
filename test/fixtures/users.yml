@@ -24,6 +24,18 @@ two:
   password_digest: <%= User.digest('password') %>
   admin: false
 
+three:
+  name: three
+  email: three@test.com
+  password_digest: <%= User.digest('password') %>
+  admin: false
+
+four:
+  name: four
+  email: four@test.com
+  password_digest: <%= User.digest('password') %>
+  admin: false
+
 <% 30.times do |n| %>
 user_<%= n+1 %>:
   name: <%= "user_#{n+1}" %>

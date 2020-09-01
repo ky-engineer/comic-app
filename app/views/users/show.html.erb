@@ -1,3 +1,9 @@
 <h1>プロフィール</h1>
 
 <%= @user.name %>
+
+<% @posts.each do |post| %>
+  <%= render post %>
+<% end %>
+
+<%= will_paginate @posts, previous_label: "&lt 前へ", next_label: "次へ &gt" %>

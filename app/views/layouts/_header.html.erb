@@ -6,7 +6,7 @@
         <li><%= link_to "新規登録", new_user_path %></li>
         <li><%= link_to "ログイン", new_session_path %></li>
       <% else %>
-        <li><%= link_to "新規投稿", "#" %></li>
+        <li><%= link_to "新規投稿", new_post_path %></li>
         <li><%= link_to "ユーザー一覧", users_path %></li>
         <li><%= link_to "プロフィール", user_path(current_user) %></li>
         <li><%= link_to "ユーザー情報の更新", edit_user_path(current_user) %></li>

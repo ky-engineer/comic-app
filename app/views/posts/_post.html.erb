@@ -1,0 +1,9 @@
+<div>
+  <%= post.title %>
+  <%= post.content %>
+  <%= post.picture_url %>
+  <%= post.created_at %>
+  <% if @user == current_user %>
+    <%= link_to "削除",  post_path(post), method: :delete, data: { confirm: "削除してよろしいですか？" } %>
+  <% end %>
+</div>

@@ -19,7 +19,6 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   # 有効なログインとログアウト
   test "login with valid information followed by logout" do
     get new_session_path
-    assert_template 'sessions/new'
     post sessions_path, params: { session: { email: @user.email, password: "password" } }
     assert_not flash.empty?
     assert_redirected_to user_path(@user)
