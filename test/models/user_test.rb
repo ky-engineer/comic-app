@@ -3,6 +3,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   def setup
     @user = User.new(name: "Example User", email: "example@example.com", password: "foobar", password_confirmation: "foobar")
+    @user.image.attach(io: File.open('test/fixtures/kitten.jpg'), filename: 'kitten.jpg', content_type: 'image/jpeg' )
   end
 
   #有効なuserオブジェクトに対するバリデーション通過のテスト
@@ -67,6 +68,17 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
+  # image属性の最小サイズ
+  test "image should be less than 5MB" do
+    @user.image.attach(io: File.open('test/fixtures/invalid_image_size.png'), filename: 'invalid_image_size.png', content_type: 'image/png')
+    assert_not @user.valid?
+  end
+
+  # image属性のフォーマット
+  test "image validation should reject invalid format" do
+    @user.image.attach(io: File.open('test/fixtures/invalid_image_format.pdf'), filename: 'invalid_image_format.pdf', content_type: 'image/pdf')
+    assert_not @user.valid?
+  end
 
   # ↑バリデーションに対するテスト
 

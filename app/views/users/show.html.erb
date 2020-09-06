@@ -1,6 +1,7 @@
 <h1>プロフィール</h1>
 
 <%= @user.name %>
+<%= image_tag @user.image.variant(resize_to_limit: [100,100]) if @user.image.attached? %>
 
 <% @posts.each do |post| %>
   <%= render post %>

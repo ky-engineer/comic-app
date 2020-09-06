@@ -5,6 +5,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     @admin = users(:admin_user)
     @non_admin = users(:non_admin_user)
     @user = users(:one)
+    User.all.each { |user| user.image.attach(io: File.open('test/fixtures/kitten.jpg'), filename: 'kitten.jpg', content_type: 'image/jpeg') }
   end
 
   # ユーザー一覧表示とページネーション機能
@@ -14,6 +15,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'
     User.paginate(page: 1).each do |user|
       assert_select 'a[href=?]', user_path(user), text: user.name
+      assert_select 'img'
     end
   end
 

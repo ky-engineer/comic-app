@@ -10,7 +10,11 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     log_in(@user)
     get edit_user_path(@user)
     assert_template 'users/edit'
-    patch user_path(@user), params: { user: { name: "name", email: "email", password: "foo", password_confirmation: "bar" } }
+    patch user_path(@user), params: { user: {
+      name: "name",
+      email: "email",
+      password: "foo",
+      password_confirmation: "bar" } }
     assert_template 'users/edit'
   end
 
@@ -25,7 +29,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     # 有効なユーザー情報の更新
     new_name = "new_name"
     new_email = "new_email@new_email.com"
-    patch user_path(@user), params: { user: { name: new_name , email: new_email, password: "", password_confirmation: "" } }
+    patch user_path(@user), params: { user: {
+      name: new_name ,
+      email: new_email,
+      password: "",
+      password_confirmation: "",
+      image: fixture_file_upload('test/fixtures/kitten.jpg', 'image/jpg') } }
+    assert @user.image.attached?
     assert_redirected_to user_path(@user)
     assert_not flash.empty?
     @user.reload

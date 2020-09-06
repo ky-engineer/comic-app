@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.image.attach(params[:user][:image])
     if @user.save
       flash[:success] = "ユーザー登録が完了しました。"
       redirect_to user_path(@user)
@@ -34,6 +35,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
+    @user.image.attach(params[:user][:image]) unless params[:user][:image].nil?
     if @user.update(user_params)
       flash[:success] = "ユーザー情報を更新しました"
       redirect_to user_path(@user)
@@ -57,7 +59,7 @@ class UsersController < ApplicationController
 
   #Strong Parametersを適用するためのメソッド
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :image)
   end
 
 

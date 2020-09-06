@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersProfileTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
+    @user.image.attach(io: File.open('test/fixtures/kitten.jpg'), filename: 'kitten.jpg', content_type: 'image/jpeg')
     @wrong_user = users(:two)
     @posts = @user.posts
   end
@@ -12,6 +13,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     get user_path(@user)
     assert_template 'users/show'
     assert_match @user.name, response.body
+    assert_select 'img'
     @posts.each do |post|
       assert_match post.title, response.body
       assert_match post.content, response.body

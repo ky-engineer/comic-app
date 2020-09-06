@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one_attached :image
   has_many :posts, dependent: :destroy
   attr_accessor :remember_token
   before_save :saved_as_lowercase
@@ -8,6 +9,9 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEXP }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :image,
+    content_type: { in: %w[image/jpeg image/gif image/png], message: "無効なファイル形式です" },
+    size: { less_than: 5.megabytes, message: "5MB以下の画像を選んでください" }
 
 
   #email属性を小文字にする

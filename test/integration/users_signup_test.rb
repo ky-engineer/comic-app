@@ -15,8 +15,14 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   test "signup with valid information" do
     get new_user_path
     assert_difference "User.count", 1 do
-      post users_path, params: { user: { name: "Example User", email: "example@example.com", password: "foobar", password_confirmation: "foobar" } }
+      post users_path, params: { user: {
+        name: "Example User",
+        email: "example@example.com",
+        password: "foobar",
+        password_confirmation: "foobar",
+        image: fixture_file_upload('test/fixtures/kitten.jpg', 'image/jpeg') } }
     end
+    assert assigns(:user).image.attached?
     assert_not flash.empty?
     assert_redirected_to user_path(assigns(:user))
   end
