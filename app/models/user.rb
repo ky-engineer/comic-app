@@ -1,6 +1,10 @@
 class User < ApplicationRecord
   has_one_attached :image
   has_many :posts, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token
   before_save :saved_as_lowercase
   validates :name, presence: true, length: { maximum: 50 }
@@ -45,6 +49,12 @@ class User < ApplicationRecord
   # 引数のハッシュ値が、データベースに保存しているrememberトークンのハッシュ値と一致するか確認する
   def authenticated?(remember_token)
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+  # 自分とフォローしているユーザーの投稿を返す
+  def feed
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Post.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
 
 end

@@ -1,4 +1,5 @@
-<h1>ユーザー一覧</h1>
+<h1><%= @title %></h1>
+<%= @user.name %>
 
 <%= will_paginate @users, previous_label: "&lt 前へ", next_label: "次へ &gt" %>
 

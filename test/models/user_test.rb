@@ -100,4 +100,24 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  # feedメソッドに対するテスト
+  test "feed should have the right posts" do
+    one = users(:one)
+    two = users(:two)
+    four = users(:four)
+    # フォローしているユーザーの投稿
+    two.posts.each do |post_following|
+      assert one.feed.include?(post_following)
+    end
+    # 自分自身の投稿
+    one.posts.each do |post_self|
+      assert one.feed.include?(post_self)
+    end
+    # フォローしていないユーザーの投稿
+    four.posts.each do |post_unfollowed|
+      assert_not one.feed.include?(post_unfollowed)
+    end
+
+  end
+
 end
