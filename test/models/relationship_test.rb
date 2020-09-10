@@ -29,5 +29,5 @@ class RelationshipTest < ActiveSupport::TestCase
 
   # ↑バリデーションに対するテスト
 
-  
+
 end

@@ -4,7 +4,7 @@ class FollowingTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:one)
     @other_user = users(:four)
-    log_in @user
+    log_in(@user)
   end
 
   # フォロー＆フォロー解除機能のテスト
@@ -29,7 +29,7 @@ class FollowingTest < ActionDispatch::IntegrationTest
   test "followers page" do
     get followers_user_path(@user)
     @user.followers.each do |user|
-      assert_select "a[href=?]", user_path(@user)
+      assert_select "a[href=?]", user_path(user)
     end
   end
 

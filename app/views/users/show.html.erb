@@ -15,12 +15,14 @@
 
 <%= link_to "#{@user.following.count} following", following_user_path(@user.id) %>
 <%= link_to "#{@user.followers.count} followers", followers_user_path(@user.id) %>
+<%= link_to "いいねした投稿：#{@user.like_posts.count}", like_posts_post_path(@user.id) %>
 
 <%= @user.name %>
 <%= image_tag @user.image.variant(resize_to_limit: [100,100]) if @user.image.attached? %>
 
 <% @posts.each do |post| %>
   <%= render post %>
+
 <% end %>
 
 <%= will_paginate @posts, previous_label: "&lt 前へ", next_label: "次へ &gt" %>

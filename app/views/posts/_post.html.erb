@@ -3,7 +3,20 @@
   <%= post.content %>
   <%= post.picture_url %>
   <%= post.created_at %>
+  <%= link_to "#{post.liked_by.count} いいね", liked_by_user_path(post.id) %>
   <% if @user == current_user %>
     <%= link_to "削除",  post_path(post), method: :delete, data: { confirm: "削除してよろしいですか？" } %>
+  <% end %>
+  <% if !current_user.nil? %>
+    <% if current_user.like_posts.include?(post) %>
+      <%= form_with(model: current_user.likes.find_by(post_id: post.id), html: { method: :delete }, local: true) do |f| %>
+        <%= f.submit "いいね解除", class: "btn btn-primary" %>
+      <% end %>
+    <% else %>
+      <%= form_with(model: current_user.likes.build, local: true) do |f| %>
+        <%= hidden_field_tag :post_id, post.id %>
+        <%= f.submit "いいね", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
