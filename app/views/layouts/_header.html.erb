@@ -1,6 +1,8 @@
 <header>
-  <div class="container">
-    <%= link_to "Comic Mate", root_path  %>
+  <div class="header-logo">
+    <%= link_to "Comic Mate", root_path %>
+  </div>
+  <div class="header-menus">
     <ul>
       <% if current_user.nil? %>
         <li><%= link_to "新規登録", new_user_path %></li>

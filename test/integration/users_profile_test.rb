@@ -17,7 +17,6 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     @posts.each do |post|
       assert_match post.title, response.body
       assert_match post.content, response.body
-      assert_match post.picture_url, response.body
     end
   end
 
@@ -26,7 +25,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     log_in(@user)
     get user_path(@user)
     @user.posts.paginate(page: 1).each do |post|
-      assert_select "a[href=?]", post_path(post), text: "削除"
+      assert_select "a[href=?]", post_path(post), text: "投稿削除"
     end
     assert_difference 'Post.count', -1 do
       delete post_path(@user.posts.first)
@@ -39,6 +38,6 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
   test "profile as wrong user" do
     log_in(@wrong_user)
     get user_path(@user)
-    assert_select "a", text: "削除", count: 0
+    assert_select "a", text: "投稿削除", count: 0
   end
 end

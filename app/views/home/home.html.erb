@@ -1,10 +1,14 @@
-<h1>ホーム画面</h1>
-<% unless current_user.nil? %>
-  <%= link_to "#{@user.following.count} following", following_user_path(@user.id) %>
-  <%= link_to "#{@user.followers.count} followers", followers_user_path(@user.id) %>
+<% if current_user.nil? %>
+  <h1 class="title">最近の投稿</h1>
 
-  <%= @user.name %>
-  <%= image_tag @user.image.variant(resize_to_limit: [100,100]) if @user.image.attached? %>
+  <% @posts.each do |post| %>
+    <%= render post %>
+  <% end %>
+
+  <%= will_paginate @posts, previous_label: "&lt 前へ", next_label: "次へ &gt" %>
+<% else %>
+  <h1 class="title">タイムライン</h1>
+  <%= render 'users/user_info', user: current_user %>
 
   <% @posts.each do |post| %>
     <%= render post %>

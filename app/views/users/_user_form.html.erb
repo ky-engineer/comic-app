@@ -1,0 +1,20 @@
+<div class="form">
+  <%= form_with(model: user, local: true) do |f| %>
+    <%= f.label :name, "ユーザー名" %>
+    <%= f.text_field :name, class: "form-control" %>
+
+    <%= f.label :email, "メールアドレス" %>
+    <%= f.email_field :email, class: "form-control" %>
+
+    <%= f.label :password, "パスワード" %>
+    <%= f.password_field :password, class: "form-control" %>
+
+    <%= f.label :password_confirmation, "パスワード（確認用）" %>
+    <%= f.password_field :password_confirmation, class: "form-control" %>
+
+    <%= f.label :image, "プロフィール画像" %>
+    <%= f.file_field :image, accept: "image/jpeg, image/gif, image/png" %>
+
+    <%= f.submit "ユーザー登録", class: "btn" %>
+  <% end %>
+</div>

@@ -26,6 +26,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @title = "ユーザー一覧"
     @users = User.paginate(page: params[:page])
   end
 
@@ -56,23 +57,30 @@ class UsersController < ApplicationController
   end
 
   def following
-    @title = "following"
+    @title = "フォロー"
     @user = User.find_by(id: params[:id])
     @users = @user.following.paginate(page: params[:page])
-    render 'show_follow'
+    render 'users/index'
   end
 
   def followers
-    @title = "followers"
+    @title = "フォロワー"
     @user = User.find_by(id: params[:id])
     @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
+    render 'users/index'
   end
 
   def liked_by
+    @title = "いいねしたユーザー"
     @post = Post.find_by(id: params[:id])
     @users = @post.liked_by.paginate(page: params[:page])
-    render @users
+    render 'users/index'
+  end
+
+  def like_posts
+    @user = User.find_by(id: params[:id])
+    @posts = @user.like_posts.paginate(page: params[:page])
+    render 'users/show'
   end
 
 

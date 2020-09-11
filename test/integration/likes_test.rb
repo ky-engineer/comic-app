@@ -19,7 +19,7 @@ class LikesTest < ActionDispatch::IntegrationTest
 
   # 投稿をいいねしたユーザー一覧ページのテスト
   test "like_posts page" do
-    get like_posts_post_path(@user)
+    get like_posts_user_path(@user)
     @user.like_posts.each do |post|
       assert_match post.title, response.body
     end

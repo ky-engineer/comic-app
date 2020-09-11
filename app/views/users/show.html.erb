@@ -1,28 +1,18 @@
 <h1>プロフィール</h1>
+<%= render 'user_info', user: @user %>
 
-<% if !current_user.nil? && current_user != @user %>
-  <% if current_user.following.include?(@user) %>
-    <%= form_with(model: current_user.active_relationships.find_by(followed_id: @user.id), html: { method: :delete }, local: true) do |f| %>
-      <%= f.submit "フォロー解除", class: "btn btn-primary" %>
-    <% end %>
+<ul class="post-tabs">
+  <% if request.original_url == user_url(@user) %>
+    <li class="active"><%= link_to "投稿", user_path(params[:id]) %></li>
+    <li><%= link_to "いいね", like_posts_user_path(params[:id]) %></li>
   <% else %>
-    <%= form_with(model: current_user.active_relationships.build, local: true) do |f| %>
-      <%= hidden_field_tag :followed_id, @user.id %>
-      <%= f.submit "フォロー", class: "btn btn-primary" %>
-    <% end %>
+    <li><%= link_to "投稿", user_path(params[:id]) %></li>
+    <li class="active"><%= link_to "いいね", like_posts_user_path(params[:id]) %></li>
   <% end %>
-<% end %>
-
-<%= link_to "#{@user.following.count} following", following_user_path(@user.id) %>
-<%= link_to "#{@user.followers.count} followers", followers_user_path(@user.id) %>
-<%= link_to "いいねした投稿：#{@user.like_posts.count}", like_posts_post_path(@user.id) %>
-
-<%= @user.name %>
-<%= image_tag @user.image.variant(resize_to_limit: [100,100]) if @user.image.attached? %>
+</ul>
 
 <% @posts.each do |post| %>
   <%= render post %>
-
 <% end %>
 
 <%= will_paginate @posts, previous_label: "&lt 前へ", next_label: "次へ &gt" %>

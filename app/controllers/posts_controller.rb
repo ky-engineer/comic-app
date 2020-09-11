@@ -27,12 +27,6 @@ class PostsController < ApplicationController
     end
   end
 
-  def like_posts
-    @user = User.find_by(id: params[:id])
-    @posts = @user.like_posts
-    render @posts
-  end
-
   private
 
   #Strong Parametersを適用するためのメソッド

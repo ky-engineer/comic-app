@@ -1,22 +1,48 @@
-<div>
-  <%= post.title %>
-  <%= post.content %>
-  <%= post.picture_url %>
-  <%= post.created_at %>
-  <%= link_to "#{post.liked_by.count} いいね", liked_by_user_path(post.id) %>
-  <% if @user == current_user %>
-    <%= link_to "削除",  post_path(post), method: :delete, data: { confirm: "削除してよろしいですか？" } %>
-  <% end %>
-  <% if !current_user.nil? %>
-    <% if current_user.like_posts.include?(post) %>
-      <%= form_with(model: current_user.likes.find_by(post_id: post.id), html: { method: :delete }, local: true) do |f| %>
-        <%= f.submit "いいね解除", class: "btn btn-primary" %>
+<div class="post-box">
+  <%= render post.user %>
+
+  <div class="post-item">
+    <div class="post-main">
+      <%= image_tag post.picture_url unless post.picture_url.nil? %>
+      <div class="post-main-right">
+        <%= content_tag(:p, post.title, class: "post-title") %>
+        <%= content_tag(:p, post.content, class: "post-content") %>
+      </div>
+    </div>
+
+    <div class="post-sub">
+      <%= content_tag(:p, post.created_at.strftime("%Y-%m-%d %H:%M"), class: "post-time") %>
+      
+      <% if !current_user.nil? %>
+        <% if current_user.like_posts.include?(post) %>
+          <%= form_with(model: current_user.likes.find_by(post_id: post.id), html: { method: :delete }, local: true) do |f| %>
+            <%= f.button type: "submit" do %>
+            <i class="fas fa-heart like-btn"></i>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= form_with(model: current_user.likes.build, local: true) do |f| %>
+            <%= hidden_field_tag :post_id, post.id %>
+            <%= f.button type: "submit" do %>
+              <i class="far fa-heart"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= form_with(url: likes_path, local: true) do |f| %>
+          <%= hidden_field_tag :post_id, post.id %>
+          <%= f.button type: "submit" do %>
+            <i class="far fa-heart"></i>
+          <% end %>
+        <% end %>
       <% end %>
-    <% else %>
-      <%= form_with(model: current_user.likes.build, local: true) do |f| %>
-        <%= hidden_field_tag :post_id, post.id %>
-        <%= f.submit "いいね", class: "btn btn-primary" %>
+
+      <%= link_to "#{post.liked_by.count}", liked_by_user_path(post.id) %>
+
+      <% if @user == current_user || ( current_user && current_user.admin? ) %>
+        <%= link_to "投稿削除",  post_path(post), method: :delete, data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
       <% end %>
-    <% end %>
-  <% end %>
+
+    </div>
+  </div>
 </div>

@@ -1,16 +1,24 @@
 <h1>ログイン</h1>
+<div class="form">
+  <%= form_with(url: sessions_path, scope: :session, local: true) do |f| %>
+    <%= f.label :email, "メールアドレス" %>
+    <%= f.email_field :email, class: "form-control" %>
 
-<%= form_for(:session, url: sessions_path) do |f| %>
-  <%= f.label :email, "メールアドレス" %>
-  <%= f.email_field :email, class: "form-control" %>
+    <%= f.label :password, "パスワード" %>
+    <%= f.password_field :password, class: "form-control" %>
 
-  <%= f.label :password, "パスワード" %>
-  <%= f.password_field :password, class: "form-control" %>
+    <%= f.label :remember_me, class: "checkbox inline" do %>
+      <%= f.check_box :remember_me %>
+      <span>ログインしたままにする</span>
+    <% end %>
 
-  <%= f.label :remember_me, class: "checkbox inline" do %>
-    <%= f.check_box :remembe_me %>
-    <span>ログインしたままにする</span>
+    <%= f.submit "ログイン", class: "btn" %>
   <% end %>
 
-  <%= f.submit "ログイン", class: "btn btn-primary" %>
-<% end %>
+  <%= form_with(url: sessions_path, scope: :session, local: true) do |f| %>
+    <%= f.hidden_field :email, value: "example@railstutorial.org" %>
+    <%= f.hidden_field :password, value: "foobar" %>
+
+    <%= f.submit "テストログイン", class: "btn btn-test-login" %>
+  <% end %>
+</div>

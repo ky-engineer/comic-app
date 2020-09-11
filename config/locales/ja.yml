@@ -2,9 +2,14 @@ ja:
   activerecord:
     models:
       user:
+      post:
     attributes:
       user:
         name: ユーザー名
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認用）
+      post:
+        title: タイトル
+        content: 紹介文
+        picture_url: 画像のURL

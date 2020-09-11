@@ -25,7 +25,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     get users_path
     User.paginate(page: 1).each do |user|
       if user != @admin
-        assert_select "a[href=?]", user_path(user), text: "削除"
+        assert_select "a[href=?]", user_path(user), text: "ユーザー削除"
       end
     end
     assert_difference 'User.count', -1 do
@@ -37,7 +37,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
   test "index as non_admin" do
     log_in(@non_admin)
     get users_path
-    assert_select "a", text: "削除", count: 0
+    assert_select "a", text: "ユーザー削除", count: 0
   end
 
 end

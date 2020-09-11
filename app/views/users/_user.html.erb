@@ -1,7 +1,15 @@
-<li>
-  <%= link_to user.name, user_path(user) %>
-  <%= image_tag user.image.variant(resize_to_limit: [100, 100]) if user.image.attached? %>
+<li class="user-item">
+  <div class="user-left">
+    <% if user.image.attached? %>
+      <%= image_tag user.image.variant(resize_to_limit: [100,100]) %>
+    <% else %>
+      <%= image_tag "default_user.jpg", size: "50x50" %>
+    <% end %>
+  </div>
+  <div class="user-right">
+    <%= link_to user.name, user_path(user) %>
+  </div>
   <% if current_user && current_user.admin? && (current_user != user) %>
-    <%= link_to "削除", user_path(user), method: :delete, data: {confirm: "本当に削除してよろしいですか？" } %>
+    <%= link_to "ユーザー削除", user_path(user), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してよろしいですか？" } %>
   <% end %>
 </li>
