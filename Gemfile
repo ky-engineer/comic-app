@@ -20,6 +20,7 @@ gem 'active_storage_validations'
 gem 'image_processing'
 gem 'mini_magick'
 gem 'mysql2'
+gem 'aws-sdk-s3', require: false
 
 
 group :development, :test do
