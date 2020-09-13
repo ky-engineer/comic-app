@@ -19,10 +19,10 @@ gem 'bootstrap-will_paginate', '1.0.0'
 gem 'active_storage_validations'
 gem 'image_processing'
 gem 'mini_magick'
+gem 'mysql2'
 
 
 group :development, :test do
-  gem 'mysql2'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
@@ -41,10 +41,6 @@ group :test do
   gem 'guard-minitest'
   gem 'minitest-reporters'
   gem 'rails-controller-testing'
-end
-
-group :production do
-  gem 'pg', '0.20.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,12 +1,11 @@
 default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
+  adapter: mysql2
 
 development:
   <<: *default
   database: comic_app_development
-  adapter: mysql2
   username: <%= ENV['LOCAL_MYSQL_USERNAME'] %>
   password: <%= ENV['LOCAL_MYSQL_PASSWORD'] %>
   host: <%= ENV['LOCAL_MYSQL_HOST'] %>
@@ -14,12 +13,13 @@ development:
 test:
   <<: *default
   database: comic_app_test
-  adapter: mysql2
   username: <%= ENV['LOCAL_MYSQL_USERNAME'] %>
   password: <%= ENV['LOCAL_MYSQL_PASSWORD'] %>
   host: <%= ENV['LOCAL_MYSQL_HOST'] %>
 
 production:
   <<: *default
-  adapter: postgresql
-  url: <%= ENV['DATABASE_URL'] %>
+  database: comic_app_production
+  username: <%= ENV['PRODUCTION_MYSQL_USERNAME'] %>
+  password: <%= ENV['PRODUCTION_MYSQL_PASSWORD'] %>
+  host: <%= ENV['PRODUCTION_MYSQL_HOST'] %>
