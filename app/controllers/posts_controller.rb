@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :login_user, only: [:new, :create, :destroy]
+  before_action :login_user
   before_action :correct_user, only: :destroy
 
   def new

@@ -1,5 +1,5 @@
 class LikesController < ApplicationController
-  before_action :login_user, onluy: [:create, :destroy]
+  before_action :login_user
 
   def create
     @post = Post.find_by(id: params[:post_id])
